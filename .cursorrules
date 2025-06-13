@@ -1,0 +1,22 @@
+# AI Code Review Buddy Development Rules
+
+## Project Context
+Building an AI-powered code review assistant that provides feedback on code quality, best practices, and potential issues.
+
+## Tech Stack
+- Frontend: React with TypeScript
+- Backend: Node.js/Express or Python/FastAPI
+- AI: OpenAI API (GPT-4)
+- Database: SQLite for simplicity (upgrade later if needed)
+
+## Code Standards
+- Use TypeScript for type safety
+- Follow TDD approach where possible
+- Keep components small and focused
+- Prioritize code readability
+
+## AI Assistant Instructions
+- Break down complex tasks into smaller steps
+- Always consider error handling
+- Suggest tests for new features
+- Keep AI prompts versioned and testable 
