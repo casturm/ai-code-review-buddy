@@ -15,8 +15,27 @@ const openai = new OpenAI({
 app.use(cors());
 app.use(express.json());
 
+// Input validation middleware
+const validateReviewRequest = (req, res, next) => {
+  const { code, language } = req.body;
+  
+  if (!code) {
+    return res.status(400).json({ error: 'Code is required' });
+  }
+  
+  if (!language) {
+    return res.status(400).json({ error: 'Language is required' });
+  }
+  
+  if (code.trim() === '') {
+    return res.status(400).json({ error: 'Code cannot be empty' });
+  }
+  
+  next();
+};
+
 // Routes
-app.post('/api/review', async (req, res) => {
+app.post('/api/review', validateReviewRequest, async (req, res) => {
   try {
     const { code, language } = req.body;
     
@@ -49,10 +68,14 @@ ${code}`;
 });
 
 // Health check endpoint
-app.get('/api/health', (req, res) => {
+app.get('/health', (req, res) => {
   res.json({ status: 'ok' });
 });
 
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-}); 
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+  });
+}
+
+module.exports = app; 
